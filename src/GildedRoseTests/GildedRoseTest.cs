@@ -1,114 +1,68 @@
 ﻿using Xunit;
-using System.Collections.Generic;
 using GildedRoseKata;
 
 namespace GildedRoseTests
 {
     public class GildedRoseTest
     {
-        [Theory]
-        [InlineData(1, 0, 1)]
-        [InlineData(0, 0, 2)]
-        [InlineData(-1, 0, 2)]
-        [InlineData(-1, 50, 50)]
-        public void AgedBrie_Quality(int sellIn, int quality, int expectedQuality)
+        private const string AgedBrie = "Aged Brie";
+        private const string Sulfuras = "Sulfuras, Hand of Ragnaros";
+        public const string BackstagePasses = "Backstage passes to a TAFKAL80ETC concert";
+        private const string Other = "Elixir of the Mongoose";
+
+        private void UpdateQuality(Item item)
         {
-            var Items = new List<Item> { new() { Name = "Aged Brie", SellIn = sellIn, Quality = quality } };
-            var sut = new GildedRose(Items);
+            var sut = new GildedRose([item]);
             sut.UpdateQuality();
-            Assert.Equal(expectedQuality, Items[0].Quality);
         }
 
         [Theory]
-        [InlineData(1, 0, 0)]
-        [InlineData(0, 0, -1)]
-        [InlineData(-1, 0, -2)]
-        public void AgedBrie_SellIn(int sellIn, int quality, int expectedSellIn)
+        [InlineData(AgedBrie, 1, 0, 1)]
+        [InlineData(AgedBrie, 0, 0, 2)]
+        [InlineData(AgedBrie, -1, 0, 2)]
+        [InlineData(AgedBrie, -1, 50, 50)]
+        [InlineData(Sulfuras, 0, 80, 80)]
+        [InlineData(Sulfuras, -1, 80, 80)]
+        [InlineData(BackstagePasses, 11, 5, 6)]
+        [InlineData(BackstagePasses, 11, 50, 50)]
+        [InlineData(BackstagePasses, 10, 5, 7)]
+        [InlineData(BackstagePasses, 6, 5, 7)]
+        [InlineData(BackstagePasses, 6, 50, 50)]
+        [InlineData(BackstagePasses, 5, 5, 8)]
+        [InlineData(BackstagePasses, 1, 5, 8)]
+        [InlineData(BackstagePasses, 1, 50, 50)]
+        [InlineData(BackstagePasses, 0, 5, 0)]
+        [InlineData(BackstagePasses, -1, 5, 0)]
+        [InlineData(Other, 1, 1, 0)]
+        [InlineData(Other, 0, 1, 0)]
+        [InlineData(Other, -1, 1, 0)]
+        [InlineData(Other, 1, 5, 4)]
+        [InlineData(Other, 0, 5, 3)]
+        [InlineData(Other, -1, 5, 3)]
+        public void Quality(string name, int sellIn, int quality, int expectedQuality)
         {
-            var Items = new List<Item> { new() { Name = "Aged Brie", SellIn = sellIn, Quality = quality } };
-            var sut = new GildedRose(Items);
-            sut.UpdateQuality();
-            Assert.Equal(expectedSellIn, Items[0].SellIn);
+            var item = new Item { Name = name, SellIn = sellIn, Quality = quality };
+            UpdateQuality(item);
+            Assert.Equal(expectedQuality, item.Quality);
         }
 
         [Theory]
-        [InlineData(0, 80, 80)]
-        [InlineData(-1, 80, 80)]
-        public void Sulfuras_Quality(int sellIn, int quality, int expectedQuality)
+        [InlineData(AgedBrie, 1, 0, 0)]
+        [InlineData(AgedBrie, 0, 0, -1)]
+        [InlineData(AgedBrie, -1, 0, -2)]
+        [InlineData(Sulfuras, 0, 80, 0)]
+        [InlineData(Sulfuras, -1, 80, -1)]
+        [InlineData(BackstagePasses, 1, 5, 0)]
+        [InlineData(BackstagePasses, 0, 5, -1)]
+        [InlineData(BackstagePasses, -1, 5, -2)]
+        [InlineData(Other, 1, 5, 0)]
+        [InlineData(Other, 0, 5, -1)]
+        [InlineData(Other, -1, 5, -2)]
+        public void SellIn(string name, int sellIn, int quality, int expectedSellIn)
         {
-            var Items = new List<Item> { new() { Name = "Sulfuras, Hand of Ragnaros", SellIn = sellIn, Quality = quality } };
-            var sut = new GildedRose(Items);
-            sut.UpdateQuality();
-            Assert.Equal(expectedQuality, Items[0].Quality);
-        }
-
-        [Theory]
-        [InlineData(0, 80, 0)]
-        [InlineData(-1, 80, -1)]
-        public void Sulfuras_SellIn(int sellIn, int quality, int expectedSellIn)
-        {
-            var Items = new List<Item> { new() { Name = "Sulfuras, Hand of Ragnaros", SellIn = sellIn, Quality = quality } };
-            var sut = new GildedRose(Items);
-            sut.UpdateQuality();
-            Assert.Equal(expectedSellIn, Items[0].SellIn);
-        }
-
-        [Theory]
-        [InlineData(11, 5, 6)]
-        [InlineData(11, 50, 50)]
-        [InlineData(10, 5, 7)]
-        [InlineData(6, 5, 7)]
-        [InlineData(6, 50, 50)]
-        [InlineData(5, 5, 8)]
-        [InlineData(1, 5, 8)]
-        [InlineData(1, 50, 50)]
-        [InlineData(0, 5, 0)]
-        [InlineData(-1, 5, 0)]
-        public void BackstagePasses_Quality(int sellIn, int quality, int expectedQuality)
-        {
-            var Items = new List<Item> { new() { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sellIn, Quality = quality } };
-            var sut = new GildedRose(Items);
-            sut.UpdateQuality();
-            Assert.Equal(expectedQuality, Items[0].Quality);
-        }
-
-        [Theory]
-        [InlineData(1, 5, 0)]
-        [InlineData(0, 5, -1)]
-        [InlineData(-1, 5, -2)]
-        public void BackstagePasses_SellIn(int sellIn, int quality, int expectedSellIn)
-        {
-            var Items = new List<Item> { new() { Name = "Backstage passes to a TAFKAL80ETC concert", SellIn = sellIn, Quality = quality } };
-            var sut = new GildedRose(Items);
-            sut.UpdateQuality();
-            Assert.Equal(expectedSellIn, Items[0].SellIn);
-        }
-
-        [Theory]
-        [InlineData(1, 1, 0)]
-        [InlineData(0, 1, 0)]
-        [InlineData(-1, 1, 0)]
-        [InlineData(1, 5, 4)]
-        [InlineData(0, 5, 3)]
-        [InlineData(-1, 5, 3)]
-        public void Default_Quality(int sellIn, int quality, int expectedQuality)
-        {
-            var Items = new List<Item> { new() { Name = "Elixir of the Mongoose", SellIn = sellIn, Quality = quality } };
-            var sut = new GildedRose(Items);
-            sut.UpdateQuality();
-            Assert.Equal(expectedQuality, Items[0].Quality);
-        }
-
-        [Theory]
-        [InlineData(1, 5, 0)]
-        [InlineData(0, 5, -1)]
-        [InlineData(-1, 5, -2)]
-        public void Default_SellIn(int sellIn, int quality, int expectedSellIn)
-        {
-            var Items = new List<Item> { new() { Name = "Elixir of the Mongoose", SellIn = sellIn, Quality = quality } };
-            var sut = new GildedRose(Items);
-            sut.UpdateQuality();
-            Assert.Equal(expectedSellIn, Items[0].SellIn);
+            var item = new Item { Name = name, SellIn = sellIn, Quality = quality };
+            UpdateQuality(item);
+            Assert.Equal(expectedSellIn, item.SellIn);
         }
     }
 }
