@@ -9,6 +9,7 @@ namespace GildedRoseTests
         private const string Sulfuras = "Sulfuras, Hand of Ragnaros";
         public const string BackstagePasses = "Backstage passes to a TAFKAL80ETC concert";
         private const string Other = "Elixir of the Mongoose";
+        private const string Conjured = "Conjured Mana Cake";
 
         private void UpdateQuality(Item item)
         {
@@ -39,6 +40,12 @@ namespace GildedRoseTests
         [InlineData(Other, 1, 5, 4)]
         [InlineData(Other, 0, 5, 3)]
         [InlineData(Other, -1, 5, 3)]
+        [InlineData(Conjured, 1, 1, 0)]
+        [InlineData(Conjured, 0, 1, 0)]
+        [InlineData(Conjured, -1, 1, 0)]
+        [InlineData(Conjured, 1, 5, 3)]
+        [InlineData(Conjured, 0, 5, 1)]
+        [InlineData(Conjured, -1, 5, 1)]
         public void Quality(string name, int sellIn, int quality, int expectedQuality)
         {
             var item = new Item { Name = name, SellIn = sellIn, Quality = quality };

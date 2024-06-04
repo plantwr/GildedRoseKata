@@ -49,6 +49,13 @@ namespace GildedRoseKata
                     continue;
                 }
 
+                if (Items[i].Name.StartsWith("Conjured"))
+                {
+                    Items[i].Quality = Math.Max(Items[i].Quality - (Items[i].SellIn > 0 ? 2 : 4), 0);
+                    Items[i].SellIn = Items[i].SellIn - 1;
+                    continue;
+                }
+
                 Items[i].Quality = Math.Max(Items[i].Quality - (Items[i].SellIn > 0 ? 1 : 2), 0);
                 Items[i].SellIn = Items[i].SellIn - 1;
             }
