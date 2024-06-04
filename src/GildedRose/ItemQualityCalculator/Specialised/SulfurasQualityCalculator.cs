@@ -1,6 +1,6 @@
-namespace GildedRoseKata.ItemQualityCalculator
+namespace GildedRoseKata.ItemQualityCalculator.Specialised
 {
-    class SulfurasQualityCalculator : IItemQualityCalculator
+    class SulfurasQualityCalculator : ISpecialisedItemQualityCalculator
     {
         public bool HasToBeSold => false;
 

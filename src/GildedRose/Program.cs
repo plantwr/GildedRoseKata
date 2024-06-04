@@ -37,8 +37,7 @@ namespace GildedRoseKata
                 new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
             };
 
-            // TODO: use dependency injection to register calculators and provider to follow Open/Closed in SOLID
-            var app = new GildedRose(Items, ItemQualityCalculatorProvider.CreateDefault());
+            var app = new GildedRose(Items, ItemQualityCalculatorProvider.Create());
 
             for (var i = 0; i < 31; i++)
             {

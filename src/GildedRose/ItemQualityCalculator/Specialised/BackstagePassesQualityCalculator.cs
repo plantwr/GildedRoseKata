@@ -1,8 +1,8 @@
 using System;
 
-namespace GildedRoseKata.ItemQualityCalculator
+namespace GildedRoseKata.ItemQualityCalculator.Specialised
 {
-    class BackstagePassesQualityCalculator : IItemQualityCalculator
+    class BackstagePassesQualityCalculator : ISpecialisedItemQualityCalculator
     {
         public bool HasToBeSold => true;
 

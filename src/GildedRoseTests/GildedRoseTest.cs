@@ -14,7 +14,7 @@ namespace GildedRoseTests
 
         private void UpdateQuality(Item item)
         {
-            var sut = new GildedRose([item], ItemQualityCalculatorProvider.CreateDefault());
+            var sut = new GildedRose([item], ItemQualityCalculatorProvider.Create());
             sut.UpdateQuality();
         }
 
