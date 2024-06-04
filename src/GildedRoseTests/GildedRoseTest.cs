@@ -83,5 +83,32 @@ namespace GildedRoseTests
             sut.UpdateQuality();
             Assert.Equal(expectedSellIn, Items[0].SellIn);
         }
+
+        [Theory]
+        [InlineData(1, 1, 0)]
+        [InlineData(0, 1, 0)]
+        [InlineData(-1, 1, 0)]
+        [InlineData(1, 5, 4)]
+        [InlineData(0, 5, 3)]
+        [InlineData(-1, 5, 3)]
+        public void Default_Quality(int sellIn, int quality, int expectedQuality)
+        {
+            var Items = new List<Item> { new() { Name = "Elixir of the Mongoose", SellIn = sellIn, Quality = quality } };
+            var sut = new GildedRose(Items);
+            sut.UpdateQuality();
+            Assert.Equal(expectedQuality, Items[0].Quality);
+        }
+
+        [Theory]
+        [InlineData(1, 5, 0)]
+        [InlineData(0, 5, -1)]
+        [InlineData(-1, 5, -2)]
+        public void Default_SellIn(int sellIn, int quality, int expectedSellIn)
+        {
+            var Items = new List<Item> { new() { Name = "Elixir of the Mongoose", SellIn = sellIn, Quality = quality } };
+            var sut = new GildedRose(Items);
+            sut.UpdateQuality();
+            Assert.Equal(expectedSellIn, Items[0].SellIn);
+        }
     }
 }

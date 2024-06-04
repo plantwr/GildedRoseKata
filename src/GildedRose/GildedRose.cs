@@ -49,20 +49,8 @@ namespace GildedRoseKata
                     continue;
                 }
 
-                if (Items[i].Quality > 0)
-                {
-                    Items[i].Quality = Items[i].Quality - 1;
-                }
-
+                Items[i].Quality = Math.Max(Items[i].Quality - (Items[i].SellIn > 0 ? 1 : 2), 0);
                 Items[i].SellIn = Items[i].SellIn - 1;
-
-                if (Items[i].SellIn < 0)
-                {
-                    if (Items[i].Quality > 0)
-                    {
-                        Items[i].Quality = Items[i].Quality - 1;
-                    }
-                }
             }
         }
     }
