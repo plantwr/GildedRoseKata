@@ -22,14 +22,16 @@ namespace GildedRoseKata
                     continue;
                 }
 
+                if (Items[i].Name.StartsWith("Sulfuras"))
+                {
+                    continue;
+                }
+
                 if (Items[i].Name != "Backstage passes to a TAFKAL80ETC concert")
                 {
                     if (Items[i].Quality > 0)
                     {
-                        if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                        {
-                            Items[i].Quality = Items[i].Quality - 1;
-                        }
+                        Items[i].Quality = Items[i].Quality - 1;
                     }
                 }
                 else
@@ -59,10 +61,7 @@ namespace GildedRoseKata
                     }
                 }
 
-                if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                {
-                    Items[i].SellIn = Items[i].SellIn - 1;
-                }
+                Items[i].SellIn = Items[i].SellIn - 1;
 
                 if (Items[i].SellIn < 0)
                 {
@@ -70,10 +69,7 @@ namespace GildedRoseKata
                     {
                         if (Items[i].Quality > 0)
                         {
-                            if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
-                            {
-                                Items[i].Quality = Items[i].Quality - 1;
-                            }
+                            Items[i].Quality = Items[i].Quality - 1;
                         }
                     }
                     else
