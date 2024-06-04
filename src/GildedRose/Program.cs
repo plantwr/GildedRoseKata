@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GildedRoseKata.ItemQualityCalculator;
 
 namespace GildedRoseKata
 {
@@ -36,7 +37,8 @@ namespace GildedRoseKata
                 new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
             };
 
-            var app = new GildedRose(Items);
+            // TODO: use dependency injection to register calculators and provider to follow Open/Closed in SOLID
+            var app = new GildedRose(Items, ItemQualityCalculatorProvider.CreateDefault());
 
             for (var i = 0; i < 31; i++)
             {

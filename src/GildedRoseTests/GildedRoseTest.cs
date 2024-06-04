@@ -1,5 +1,6 @@
 ﻿using Xunit;
 using GildedRoseKata;
+using GildedRoseKata.ItemQualityCalculator;
 
 namespace GildedRoseTests
 {
@@ -13,7 +14,7 @@ namespace GildedRoseTests
 
         private void UpdateQuality(Item item)
         {
-            var sut = new GildedRose([item]);
+            var sut = new GildedRose([item], ItemQualityCalculatorProvider.CreateDefault());
             sut.UpdateQuality();
         }
 
