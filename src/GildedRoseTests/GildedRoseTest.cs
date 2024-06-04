@@ -6,13 +6,29 @@ namespace GildedRoseTests
 {
     public class GildedRoseTest
     {
-        [Fact]
-        public void foo()
+        [Theory]
+        [InlineData(1, 0, 1)]
+        [InlineData(0, 0, 2)]
+        [InlineData(-1, 0, 2)]
+        [InlineData(-1, 50, 50)]
+        public void AgedBrie_Quality(int sellIn, int quality, int expectedQuality)
         {
-            IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = 0, Quality = 0 } };
-            GildedRose app = new GildedRose(Items);
-            app.UpdateQuality();
-            Assert.Equal("fixme", Items[0].Name);
+            var Items = new List<Item> { new() { Name = "Aged Brie", SellIn = sellIn, Quality = quality } };
+            var sut = new GildedRose(Items);
+            sut.UpdateQuality();
+            Assert.Equal(expectedQuality, Items[0].Quality);
+        }
+
+        [Theory]
+        [InlineData(1, 0, 0)]
+        [InlineData(0, 0, -1)]
+        [InlineData(-1, 0, -2)]
+        public void AgedBrie_SellIn(int sellIn, int quality, int expectedSellIn)
+        {
+            var Items = new List<Item> { new() { Name = "Aged Brie", SellIn = sellIn, Quality = quality } };
+            var sut = new GildedRose(Items);
+            sut.UpdateQuality();
+            Assert.Equal(expectedSellIn, Items[0].SellIn);
         }
     }
 }
